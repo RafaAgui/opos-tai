@@ -66,6 +66,44 @@
       </article>
     </section>
 
+    <section class="temario">
+      <h2>Temario de la oposición</h2>
+
+      @if (cargandoTemario()) {
+        <p>Cargando temario...</p>
+      } @else if (errorTemario()) {
+        <p class="temario__error">{{ errorTemario() }}</p>
+      } @else if (bloquesTemario().length === 0) {
+        <p>Todavía no hay bloques en el temario.</p>
+      } @else {
+        <div class="temario__grid">
+          @for (bloque of bloquesTemario(); track bloque.id) {
+            <article class="topic-card">
+              <h3>{{ bloque.nombre }}</h3>
+
+              <p>
+                {{ bloque.temas.length }}
+                temas
+              </p>
+
+              @if (bloque.temas.length > 0) {
+                <ul>
+                  @for (tema of bloque.temas; track tema.id) {
+                    <li>
+                      <strong>Tema {{ tema.numero }}:</strong>
+                      {{ tema.titulo }}
+                    </li>
+                  }
+                </ul>
+              } @else {
+                <p>Este bloque todavía no tiene temas.</p>
+              }
+            </article>
+          }
+        </div>
+      }
+    </section>
+
     <section class="topics" id="temario">
       <div class="section-heading">
         <div>

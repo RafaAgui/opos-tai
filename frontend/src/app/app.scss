@@ -239,3 +239,138 @@
     }
   }
 }
+
+
+
+/* ========================================
+   TEMARIO
+======================================== */
+
+.temario {
+  margin-top: 2rem;
+
+  h2 {
+    margin: 0 0 1.25rem;
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  > p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  &__error {
+    padding: 1rem 1.25rem;
+    border: 1px solid #fecaca;
+    border-radius: 0.75rem;
+    background-color: #fef2f2;
+    color: #b91c1c !important;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* ========================================
+   TARJETAS DE BLOQUES
+======================================== */
+
+.topic-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  min-width: 0;
+  padding: 1.5rem;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background-color: #ffffff;
+
+  box-shadow: 0 2px 6px rgb(15 23 42 / 4%);
+  margin-block: .5rem 2rem;
+
+  h3 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  > p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 0.75rem 0.875rem;
+    border-radius: 0.625rem;
+    background-color: #f8fafc;
+
+    color: #475569;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+
+    strong {
+      color: #334155;
+      font-weight: 600;
+    }
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 600px) {
+  .temario {
+    margin-top: 1.5rem;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .topic-card {
+    padding: 1.125rem;
+  }
+}
+
+/* Respetar las preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .topic-card {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

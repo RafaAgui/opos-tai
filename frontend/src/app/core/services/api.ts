@@ -9,6 +9,20 @@ export interface HealthResponse {
   message: string;
 }
 
+export interface Tema {
+  id: number;
+  numero: number;
+  titulo: string;
+  contenido: string | null;
+}
+
+export interface BloqueTemario {
+  id: number;
+  nombre: string;
+  orden: number;
+  temas: Tema[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,6 +33,12 @@ export class Api {
   getHealth(): Observable<HealthResponse> {
     return this.http.get<HealthResponse>(
       `${this.apiUrl}/api/health`,
+    );
+  }
+
+  getTemario(): Observable<BloqueTemario[]> {
+    return this.http.get<BloqueTemario[]>(
+      `${this.apiUrl}/api/temario`,
     );
   }
 }

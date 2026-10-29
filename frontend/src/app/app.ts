@@ -1,6 +1,6 @@
 
 import { Component, signal, inject, OnInit } from '@angular/core';
-import { Api, HealthResponse } from './core/services/api';
+import { Api, HealthResponse, BloqueTemario  } from './core/services/api';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,11 @@ export class App implements OnInit {
   readonly errorBackend = signal('');
 
   readonly backendConectado = signal(false);
+
+  // signal del temario
+  readonly bloquesTemario = signal<BloqueTemario[]>([]);
+  readonly cargandoTemario = signal(true);
+  readonly errorTemario = signal('');
 
   bloques = [
     { nombre: 'Organización del Estado', temas: 10, progreso: 0 },
@@ -40,6 +45,21 @@ export class App implements OnInit {
         this.backendConectado.set(false);
         this.errorBackend.set(
           'No se ha podido contactar con el backend.',
+        );
+      },
+    });
+
+    this.api.getTemario().subscribe({
+      next: (bloques) => {
+        this.bloquesTemario.set(bloques);
+        this.cargandoTemario.set(false);
+        this.errorTemario.set('');
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar el temario:', error);
+        this.cargandoTemario.set(false);
+        this.errorTemario.set(
+          'No se ha podido cargar el temario.',
         );
       },
     });
