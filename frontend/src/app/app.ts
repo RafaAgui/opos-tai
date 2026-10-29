@@ -1,6 +1,6 @@
 
 import { Component, signal, inject, OnInit } from '@angular/core';
-import { Api, HealthResponse, BloqueTemario  } from './core/services/api';
+import { Api, HealthResponse, BloqueTemario, DetalleTema  } from './core/services/api';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +22,11 @@ export class App implements OnInit {
   readonly bloquesTemario = signal<BloqueTemario[]>([]);
   readonly cargandoTemario = signal(true);
   readonly errorTemario = signal('');
+
+  // signal del tema
+  readonly temaSeleccionado = signal<DetalleTema | null>(null);
+  readonly cargandoTema = signal(false);
+  readonly errorTema = signal('');
 
   bloques = [
     { nombre: 'Organización del Estado', temas: 10, progreso: 0 },
@@ -49,6 +54,7 @@ export class App implements OnInit {
       },
     });
 
+    // Cargar el temario al iniciar la aplicación
     this.api.getTemario().subscribe({
       next: (bloques) => {
         this.bloquesTemario.set(bloques);
@@ -60,6 +66,27 @@ export class App implements OnInit {
         this.cargandoTemario.set(false);
         this.errorTemario.set(
           'No se ha podido cargar el temario.',
+        );
+      },
+    });
+  }
+
+  // Función para seleccionar un tema y cargar sus detalles
+  seleccionarTema(id: number): void {
+    this.temaSeleccionado.set(null);
+    this.cargandoTema.set(true);
+    this.errorTema.set('');
+
+    this.api.getTema(id).subscribe({
+      next: (tema) => {
+        this.temaSeleccionado.set(tema);
+        this.cargandoTema.set(false);
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar el tema:', error);
+        this.cargandoTema.set(false);
+        this.errorTema.set(
+          'No se ha podido cargar el tema seleccionado.',
         );
       },
     });

@@ -23,6 +23,17 @@ export interface BloqueTemario {
   temas: Tema[];
 }
 
+export interface DetalleTema {
+  id: number;
+  numero: number;
+  titulo: string;
+  contenido: string | null;
+  bloque: {
+    id: number;
+    nombre: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -41,4 +52,12 @@ export class Api {
       `${this.apiUrl}/api/temario`,
     );
   }
+
+
+  getTema(id: number): Observable<DetalleTema> {
+    return this.http.get<DetalleTema>(
+      `${this.apiUrl}/api/temas/${id}`,
+    );
+  }
+
 }

@@ -88,16 +88,64 @@
 
               @if (bloque.temas.length > 0) {
                 <ul>
+
                   @for (tema of bloque.temas; track tema.id) {
                     <li>
-                      <strong>Tema {{ tema.numero }}:</strong>
-                      {{ tema.titulo }}
+                      <div class="tema-item">
+                        <div class="tema-item__info">
+                          <strong>Tema {{ tema.numero }}</strong>
+                          <span>{{ tema.titulo }}</span>
+                        </div>
+
+                        <button
+                          type="button"
+                          class="tema-item__button"
+                          (click)="seleccionarTema(tema.id)"
+                        >
+                          Ver tema
+                        </button>
+                      </div>
                     </li>
                   }
+
                 </ul>
               } @else {
                 <p>Este bloque todavía no tiene temas.</p>
               }
+
+
+              @if (cargandoTema()) {
+                <section class="tema-detalle">
+                  <p>Cargando tema...</p>
+                </section>
+              }
+
+              @if (errorTema()) {
+                <section class="tema-detalle tema-detalle--error">
+                  <p>{{ errorTema() }}</p>
+                </section>
+              }
+
+              @if (temaSeleccionado(); as tema) {
+                <section class="tema-detalle">
+                  <p class="tema-detalle__bloque">
+                    {{ tema.bloque.nombre }}
+                  </p>
+
+                  <h2>
+                    Tema {{ tema.numero }}: {{ tema.titulo }}
+                  </h2>
+
+                  <div class="tema-detalle__contenido">
+                    @if (tema.contenido) {
+                      <p>{{ tema.contenido }}</p>
+                    } @else {
+                      <p>Este tema todavía no tiene contenido.</p>
+                    }
+                  </div>
+                </section>
+              }
+
             </article>
           }
         </div>
