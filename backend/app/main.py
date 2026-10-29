@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.database import init_db
+from app.database import init_db, obtener_temario
 
 
 @asynccontextmanager
@@ -40,3 +40,9 @@ def health_check():
         "application": "Opos TAI",
         "message": "El backend funciona correctamente",
     }
+
+
+@app.get("/api/temario")
+def consultar_temario():
+    """Devuelve el temario almacenado en SQLite."""
+    return obtener_temario()
