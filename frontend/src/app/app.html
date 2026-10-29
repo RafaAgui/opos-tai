@@ -1,0 +1,69 @@
+<div class="layout">
+  <aside class="sidebar">
+    <h1 class="sidebar__logo">Opus <span>TAI</span></h1>
+
+    <nav>
+      <a class="sidebar__link sidebar__link--active" href="#inicio">
+        Inicio
+      </a>
+      <a class="sidebar__link" href="#temario">Temario</a>
+      <a class="sidebar__link" href="#tests">Tests</a>
+      <a class="sidebar__link" href="#asistente">Asistente IA</a>
+      <a class="sidebar__link" href="#progreso">Mi progreso</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <div>
+        <p class="eyebrow">PREPARACIÓN DE OPOSICIONES</p>
+        <h2>Tu espacio de estudio</h2>
+      </div>
+      <span class="header__tag">TAI · 2026</span>
+    </header>
+
+    <section class="welcome">
+      <h2>Avanza tema a tema.</h2>
+      <p>Organiza tu estudio, practica y aprende con ayuda de la IA.</p>
+    </section>
+
+    <section class="stats" id="progreso">
+      <article class="stat-card">
+        <span>Temas estudiados</span>
+        <strong>0</strong>
+      </article>
+
+      <article class="stat-card">
+        <span>Tests realizados</span>
+        <strong>0</strong>
+      </article>
+
+      <article class="stat-card">
+        <span>Progreso global</span>
+        <strong>0 %</strong>
+      </article>
+    </section>
+
+    <section class="topics" id="temario">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">TU PLAN DE ESTUDIO</p>
+          <h2>Bloques del temario</h2>
+        </div>
+      </div>
+
+      <article class="topic-card" *ngFor="let bloque of bloques">
+        <div>
+          <h3>{{ bloque.nombre }}</h3>
+          <p>{{ bloque.temas }} temas · {{ bloque.progreso }} % completado</p>
+        </div>
+
+        <div class="topic-card__progress">
+          <div [style.width.%]="bloque.progreso"></div>
+        </div>
+
+        <button type="button">Ver temas</button>
+      </article>
+    </section>
+  </main>
+</div>
