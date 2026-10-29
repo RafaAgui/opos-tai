@@ -1,10 +1,10 @@
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.database import init_db, obtener_temario
+from app.database import init_db, obtener_temario, obtener_tema
 
 
 @asynccontextmanager
@@ -46,3 +46,19 @@ def health_check():
 def consultar_temario():
     """Devuelve el temario almacenado en SQLite."""
     return obtener_temario()
+
+
+
+@app.get("/api/temas/{tema_id}")
+def consultar_tema(tema_id: int):
+    """Devuelve el detalle de un tema."""
+
+    tema = obtener_tema(tema_id)
+
+    if tema is None:
+        raise HTTPException(
+            status_code=404,
+            detail="El tema solicitado no existe",
+        )
+
+    return tema

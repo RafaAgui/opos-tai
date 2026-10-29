@@ -74,3 +74,38 @@ def obtener_temario() -> list[dict]:
             })
 
     return list(bloques.values())
+
+
+def obtener_tema(tema_id: int) -> dict | None:
+    """Devuelve un tema concreto junto con el nombre de su bloque."""
+
+    with get_connection() as connection:
+        fila = connection.execute(
+            """
+            SELECT
+                t.id,
+                t.numero,
+                t.titulo,
+                t.contenido,
+                b.id AS bloque_id,
+                b.nombre AS bloque_nombre
+            FROM temas t
+            INNER JOIN bloques b ON b.id = t.bloque_id
+            WHERE t.id = ?
+            """,
+            (tema_id,),
+        ).fetchone()
+
+    if fila is None:
+        return None
+
+    return {
+        "id": fila["id"],
+        "numero": fila["numero"],
+        "titulo": fila["titulo"],
+        "contenido": fila["contenido"],
+        "bloque": {
+            "id": fila["bloque_id"],
+            "nombre": fila["bloque_nombre"],
+        },
+    }
