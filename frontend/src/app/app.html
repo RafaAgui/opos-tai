@@ -27,6 +27,28 @@
       <p>Organiza tu estudio, practica y aprende con ayuda de la IA.</p>
     </section>
 
+    <section class="backend-status">
+      <div class="backend-status__heading">
+        <h3>Conexión con el servidor</h3>
+
+        <span
+          class="backend-status__badge"
+          [class.backend-status__badge--online]="backendConectado()"
+          [class.backend-status__badge--offline]="errorBackend()"
+        >
+          {{ estadoBackend() }}
+        </span>
+      </div>
+
+      @if (respuestaBackend(); as respuesta) {
+        <p>{{ respuesta.message }}</p>
+      }
+
+      @if (errorBackend(); as error) {
+        <p>{{ error }}</p>
+      }
+    </section>
+
     <section class="stats" id="progreso">
       <article class="stat-card">
         <span>Temas estudiados</span>
@@ -52,18 +74,21 @@
         </div>
       </div>
 
-      <article class="topic-card" *ngFor="let bloque of bloques">
-        <div>
-          <h3>{{ bloque.nombre }}</h3>
-          <p>{{ bloque.temas }} temas · {{ bloque.progreso }} % completado</p>
-        </div>
+      @for (bloque of bloques; track bloque.nombre) {
+        <article class="topic-card">
+          <div>
+            <h3>{{ bloque.nombre }}</h3>
+            <p>{{ bloque.temas }} temas · {{ bloque.progreso }} % completado</p>
+          </div>
 
         <div class="topic-card__progress">
           <div [style.width.%]="bloque.progreso"></div>
         </div>
 
         <button type="button">Ver temas</button>
-      </article>
+        </article>
+      }
+
     </section>
   </main>
 </div>
