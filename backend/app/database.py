@@ -67,7 +67,8 @@ def obtener_temario() -> list[dict]:
                 t.id AS tema_id,
                 t.numero AS tema_numero,
                 t.titulo AS tema_titulo,
-                t.contenido AS tema_contenido
+                t.contenido AS tema_contenido,
+                t.estado_estudio AS tema_estado_estudio
             FROM bloques b
             LEFT JOIN temas t ON t.bloque_id = b.id
             ORDER BY b.orden, t.numero
@@ -92,6 +93,7 @@ def obtener_temario() -> list[dict]:
                 "numero": fila["tema_numero"],
                 "titulo": fila["tema_titulo"],
                 "contenido": fila["tema_contenido"],
+                "estado_estudio": fila["tema_estado_estudio"],
             })
 
     return list(bloques.values())
@@ -108,6 +110,7 @@ def obtener_tema(tema_id: int) -> dict | None:
                 t.numero,
                 t.titulo,
                 t.contenido,
+                t.estado_estudio,
                 b.id AS bloque_id,
                 b.nombre AS bloque_nombre
             FROM temas t
@@ -125,6 +128,7 @@ def obtener_tema(tema_id: int) -> dict | None:
         "numero": fila["numero"],
         "titulo": fila["titulo"],
         "contenido": fila["contenido"],
+        "estado_estudio": fila["estado_estudio"],
         "bloque": {
             "id": fila["bloque_id"],
             "nombre": fila["bloque_nombre"],
