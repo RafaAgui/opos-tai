@@ -1,10 +1,10 @@
 
 from contextlib import asynccontextmanager
-
+from typing import Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
-from app.database import init_db, obtener_temario, obtener_tema
+from pydantic import BaseModel
+from app.database import init_db, obtener_temario, obtener_tema, actualizar_estado_tema
 
 
 @asynccontextmanager
@@ -13,6 +13,9 @@ async def lifespan(app: FastAPI):
     init_db()
     yield
 
+
+class EstadoTemaRequest(BaseModel):
+    estado: Literal["pendiente", "en curso", "completado"]
 
 app = FastAPI(
     title="Opos TAI API",
@@ -62,3 +65,25 @@ def consultar_tema(tema_id: int):
         )
 
     return tema
+
+
+@app.patch("/api/temas/{tema_id}/estado")
+def cambiar_estado_tema(
+    tema_id: int,
+    solicitud: EstadoTemaRequest
+):
+    actualizado = actualizar_estado_tema(
+        tema_id,
+        solicitud.estado
+    )
+
+    if not actualizado:
+        raise HTTPException(
+            status_code=404,
+            detail="El tema no existe"
+        )
+
+    return {
+        "id": tema_id,
+        "estado_estudio": solicitud.estado
+    }

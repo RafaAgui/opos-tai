@@ -11,7 +11,11 @@ def get_connection() -> sqlite3.Connection:
     return connection
 
 
+
+
 def init_db() -> None:
+    """Crea las tablas y actualiza el esquema cuando sea necesario."""
+
     with get_connection() as connection:
         connection.executescript("""
             CREATE TABLE IF NOT EXISTS bloques (
@@ -31,7 +35,24 @@ def init_db() -> None:
             );
         """)
 
+        # Consultamos las columnas existentes en la tabla temas.
+        columnas = {
+            fila["name"]
+            for fila in connection.execute(
+                "PRAGMA table_info(temas)"
+            ).fetchall()
+        }
+
+        # Añadimos la columna solo si todavía no existe.
+        if "estado_estudio" not in columnas:
+            connection.execute("""
+                ALTER TABLE temas
+                ADD COLUMN estado_estudio TEXT
+                NOT NULL DEFAULT 'pendiente'
+            """)
+
     print(f"Base de datos inicializada: {DATABASE_PATH}")
+
 
 
 def obtener_temario() -> list[dict]:
@@ -109,3 +130,31 @@ def obtener_tema(tema_id: int) -> dict | None:
             "nombre": fila["bloque_nombre"],
         },
     }
+
+
+def actualizar_estado_tema(tema_id: int, estado: str) -> bool:
+    """Actualiza el estado de estudio de un tema."""
+
+    estados_validos = {"pendiente", "en curso", "completado"}
+
+    if estado not in estados_validos:
+        raise ValueError("Estado de estudio no válido")
+
+    conexion = get_connection()
+
+    try:
+        cursor = conexion.execute(
+            """
+            UPDATE temas
+            SET estado_estudio = ?
+            WHERE id = ?
+            """,
+            (estado, tema_id),
+        )
+
+        conexion.commit()
+
+        return cursor.rowcount > 0
+
+    finally:
+        conexion.close()
