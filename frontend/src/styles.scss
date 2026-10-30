@@ -1,1 +1,201 @@
+
+/* ========================================
+   CONTENIDO MARKDOWN - APUNTES
+======================================== */
+
+.tema-detalle__contenido {
+  margin-top: 2rem;
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.2;
+
+  /* Títulos */
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: #17243a;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h1 {
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    margin: 2.25rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 1.45rem;
+  }
+
+  h3 {
+    margin: 1.75rem 0 0.75rem;
+    font-size: 1.15rem;
+  }
+
+  h4 {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 1rem;
+  }
+
+  /* Párrafos */
+  p {
+    margin: 0 0 1rem;
+  }
+
+  /* Negritas */
+  strong {
+    color: #17243a;
+    font-weight: 700;
+  }
+
+  /* Listas */
+  ul,
+  ol {
+    margin: 0 0 1.25rem;
+    padding-left: 1.75rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    padding-left: 0.25rem;
+  }
+
+  li::marker {
+    color: #176b5b;
+    font-weight: 700;
+  }
+
+  /* Enlaces */
+  a {
+    color: #176b5b;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: #0f4f43;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #176b5b;
+      outline-offset: 3px;
+    }
+  }
+
+  /* Tablas */
+  table {
+    width: 100%;
+    margin: 1.5rem 0 2rem;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  th,
+  td {
+    padding: 0.85rem 1rem;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: #f1f5f9;
+    color: #17243a;
+    font-weight: 700;
+  }
+
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Código */
+  code {
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    background: #eef2f7;
+    color: #9d174d;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 0.875em;
+  }
+
+  pre {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    overflow-x: auto;
+    border-radius: 0.75rem;
+    background: #17243a;
+    color: #e2e8f0;
+    line-height: 1.6;
+
+    code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Citas */
+  blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid #35a88e;
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: #f0f9f6;
+    color: #475569;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /* Separadores */
+  hr {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  /* Imágenes */
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem auto;
+    border-radius: 0.75rem;
+  }
+}
+
+/* Tablas adaptables a móviles */
+@media (max-width: 650px) {
+  .tema-detalle__contenido {
+    font-size: 0.95rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+    }
+
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: normal;
+    }
+
+    th,
+    td {
+      min-width: 120px;
+      padding: 0.65rem;
+    }
+  }
+}
 /* You can add global styles to this file, and also import other style files */

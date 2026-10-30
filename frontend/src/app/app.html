@@ -150,14 +150,9 @@
       <p class="tema-detalle__bloque">
         {{ tema.bloque.nombre }}
       </p>
-
-      <h2>
-        Tema {{ tema.numero }}: {{ tema.titulo }}
-      </h2>
-
       <div class="tema-detalle__contenido">
         @if (tema.contenido) {
-          <p>{{ tema.contenido }}</p>
+          <div [innerHTML]="contenidoHtml()"></div>
         } @else {
           <p>Este tema todavía no tiene contenido.</p>
         }

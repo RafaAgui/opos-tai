@@ -1,5 +1,6 @@
 
 import { Component, signal, inject, OnInit, computed  } from '@angular/core';
+import { marked } from 'marked';
 import { Api, HealthResponse, BloqueTemario, DetalleTema, EstadoEstudio   } from './core/services/api';
 
 @Component({
@@ -53,6 +54,18 @@ export class App implements OnInit {
           (this.temasCompletados() / this.totalTemas()) * 100
         )
   );
+
+  readonly contenidoHtml = computed(() => {
+    const tema = this.temaSeleccionado();
+
+    if (!tema?.contenido) {
+      return '';
+    }
+
+    return marked.parse(tema.contenido, {
+      async: false
+    });
+  });
 
   ngOnInit(): void {
     this.api.getHealth().subscribe({
