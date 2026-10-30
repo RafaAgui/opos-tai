@@ -1,7 +1,3 @@
-Vamos a empezar con el desarrollo del contenido real de Opus TAI.
-
-Una precisión: este tema corresponde al Bloque II. Tecnología básica, Tema 1, de la convocatoria TAI C1. Vamos a respetar el título oficial y desarrollar los apartados con orientación a examen, pero también con explicaciones que permitan comprender los conceptos.
-
 # Bloque II. Tecnología básica
 
 ## Tema 1. Informática básica. Representación y comunicación de la información: elementos constitutivos de un sistema de información. Características y funciones. Arquitectura de ordenadores. Componentes internos de los equipos microinformáticos.
@@ -887,18 +883,3 @@ Te recomiendo utilizar documentación técnica en español y fuentes oficiales:
 - [IBM Think](https://www.ibm.com/es-es/think/topics?utm_source=chatgpt.com): arquitectura, hardware y sistemas informáticos.
 - [Unicode Standard](https://www.unicode.org/standard/standard.html?utm_source=chatgpt.com): estándar de representación de caracteres.
 - [ETSI](https://www.etsi.org/?utm_source=chatgpt.com): estándares de comunicaciones y telecomunicaciones.
-
-## 12. Cómo incorporarlo a Opus TAI
-
-Mi recomendación es que este desarrollo sea nuestro primer contenido de estudio, pero antes de guardarlo debemos hacer una pequeña adaptación al modelo de datos.
-
-Actualmente `temas.contenido` es un campo de texto. Nos servirá para empezar, pero a medio plazo conviene separar:
-
-- Contenido desarrollado.
-- Resumen.
-- Referencias normativas y bibliográficas.
-- Preguntas de autoevaluación.
-
-Así podremos conectar después el contenido con LangChain y crear un sistema RAG que responda utilizando exclusivamente nuestros apuntes.
-
-Siguiente paso: incorporar este Tema 1 a `opos_tai.db` y comprobar que aparece correctamente en la ficha de Angular.
