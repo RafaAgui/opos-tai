@@ -162,3 +162,46 @@ def actualizar_estado_tema(tema_id: int, estado: str) -> bool:
 
     finally:
         conexion.close()
+
+def obtener_resumen_contenidos() -> list[dict]:
+    """Devuelve el estado de los contenidos Markdown por bloque."""
+
+    with get_connection() as connection:
+        filas = connection.execute("""
+            SELECT
+                b.id,
+                b.nombre,
+                b.orden,
+                COUNT(t.id) AS total_temas,
+                SUM(
+                    CASE
+                        WHEN t.contenido IS NOT NULL
+                             AND TRIM(t.contenido) <> ''
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS temas_con_contenido
+            FROM bloques b
+            LEFT JOIN temas t ON t.bloque_id = b.id
+            GROUP BY b.id, b.nombre, b.orden
+            ORDER BY b.orden
+        """).fetchall()
+
+    resumen = []
+
+    for fila in filas:
+        total = fila["total_temas"]
+        con_contenido = fila["temas_con_contenido"] or 0
+
+        resumen.append({
+            "bloque_id": fila["id"],
+            "nombre": fila["nombre"],
+            "total_temas": total,
+            "temas_con_contenido": con_contenido,
+            "temas_pendientes": total - con_contenido,
+            "porcentaje": round(
+                con_contenido / total * 100
+            ) if total else 0
+        })
+
+    return resumen

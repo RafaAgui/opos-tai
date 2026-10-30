@@ -4,7 +4,13 @@ from typing import Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from app.database import init_db, obtener_temario, obtener_tema, actualizar_estado_tema
+from app.database import (
+    init_db,
+    obtener_temario,
+    obtener_tema,
+    actualizar_estado_tema,
+    obtener_resumen_contenidos,
+)
 
 
 @asynccontextmanager
@@ -50,7 +56,10 @@ def consultar_temario():
     """Devuelve el temario almacenado en SQLite."""
     return obtener_temario()
 
-
+@app.get("/api/estadisticas/contenidos")
+def consultar_resumen_contenidos():
+    """Devuelve la cobertura de contenidos del temario."""
+    return obtener_resumen_contenidos()
 
 @app.get("/api/temas/{tema_id}")
 def consultar_tema(tema_id: int):
