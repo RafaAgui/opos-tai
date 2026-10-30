@@ -49,132 +49,155 @@
       }
     </section>
 
-    <section class="stats" id="progreso">
-      <article class="stat-card">
-        <span>Temas estudiados</span>
-        <strong>0</strong>
-      </article>
+<section class="stats" id="progreso">
+  <article class="stat-card">
+    <span>Temas totales</span>
+    <strong>{{ totalTemas() }}</strong>
+  </article>
 
-      <article class="stat-card">
-        <span>Tests realizados</span>
-        <strong>0</strong>
-      </article>
+  <article class="stat-card">
+    <span>Temas completados</span>
+    <strong>{{ temasCompletados() }}</strong>
+  </article>
 
-      <article class="stat-card">
-        <span>Progreso global</span>
-        <strong>0 %</strong>
-      </article>
-    </section>
-
-    <section class="temario">
-      <h2>Temario de la oposición</h2>
-
-      @if (cargandoTemario()) {
-        <p>Cargando temario...</p>
-      } @else if (errorTemario()) {
-        <p class="temario__error">{{ errorTemario() }}</p>
-      } @else if (bloquesTemario().length === 0) {
-        <p>Todavía no hay bloques en el temario.</p>
-      } @else {
-        <div class="temario__grid">
-          @for (bloque of bloquesTemario(); track bloque.id) {
-            <article class="topic-card">
-              <h3>{{ bloque.nombre }}</h3>
-
-              <p>
-                {{ bloque.temas.length }}
-                temas
-              </p>
-
-              @if (bloque.temas.length > 0) {
-                <ul>
-
-                  @for (tema of bloque.temas; track tema.id) {
-                    <li>
-                      <div class="tema-item">
-                        <div class="tema-item__info">
-                          <strong>Tema {{ tema.numero }}</strong>
-                          <span>{{ tema.titulo }}</span>
-                        </div>
-
-                        <button
-                          type="button"
-                          class="tema-item__button"
-                          (click)="seleccionarTema(tema.id)"
-                        >
-                          Ver tema
-                        </button>
-                      </div>
-                    </li>
-                  }
-
-                </ul>
-              } @else {
-                <p>Este bloque todavía no tiene temas.</p>
-              }
+  <article class="stat-card">
+    <span>Progreso global</span>
+    <strong>{{ progresoGlobal() }} %</strong>
+  </article>
+</section>
 
 
-              @if (cargandoTema()) {
-                <section class="tema-detalle">
-                  <p>Cargando tema...</p>
-                </section>
-              }
+<section class="temario" id="temario">
+  <h2>Temario de la oposición</h2>
 
-              @if (errorTema()) {
-                <section class="tema-detalle tema-detalle--error">
-                  <p>{{ errorTema() }}</p>
-                </section>
-              }
-
-              @if (temaSeleccionado(); as tema) {
-                <section class="tema-detalle">
-                  <p class="tema-detalle__bloque">
-                    {{ tema.bloque.nombre }}
-                  </p>
-
-                  <h2>
-                    Tema {{ tema.numero }}: {{ tema.titulo }}
-                  </h2>
-
-                  <div class="tema-detalle__contenido">
-                    @if (tema.contenido) {
-                      <p>{{ tema.contenido }}</p>
-                    } @else {
-                      <p>Este tema todavía no tiene contenido.</p>
-                    }
-                  </div>
-                </section>
-              }
-
-            </article>
-          }
-        </div>
-      }
-    </section>
-
-    <section class="topics" id="temario">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">TU PLAN DE ESTUDIO</p>
-          <h2>Bloques del temario</h2>
-        </div>
-      </div>
-
-      @for (bloque of bloques; track bloque.nombre) {
+  @if (cargandoTemario()) {
+    <p>Cargando temario...</p>
+  } @else if (errorTemario()) {
+    <p class="temario__error">{{ errorTemario() }}</p>
+  } @else if (bloquesTemario().length === 0) {
+    <p>Todavía no hay bloques en el temario.</p>
+  } @else {
+    <div class="temario__grid">
+      @for (bloque of bloquesTemario(); track bloque.id) {
         <article class="topic-card">
-          <div>
-            <h3>{{ bloque.nombre }}</h3>
-            <p>{{ bloque.temas }} temas · {{ bloque.progreso }} % completado</p>
+          <h3>{{ bloque.nombre }}</h3>
+
+          <div class="bloque-progreso">
+            <div class="bloque-progreso__info">
+              <span>{{ bloque.temas.length }} temas</span>
+              <strong>{{ progresoBloque(bloque) }} %</strong>
+            </div>
+
+            <div
+              class="bloque-progreso__barra"
+              role="progressbar"
+              [attr.aria-valuenow]="progresoBloque(bloque)"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [attr.aria-label]="'Progreso del bloque: ' + progresoBloque(bloque) + '%'"
+            >
+              <div
+                class="bloque-progreso__relleno"
+                [style.width.%]="progresoBloque(bloque)"
+              ></div>
+            </div>
           </div>
+          <p>{{ bloque.temas.length }} temas</p>
 
-        <div class="topic-card__progress">
-          <div [style.width.%]="bloque.progreso"></div>
-        </div>
+          @if (bloque.temas.length > 0) {
+            <ul>
+              @for (tema of bloque.temas; track tema.id) {
+                <li>
+                  <div class="tema-item">
+                    <div class="tema-item__info">
+                      <strong>Tema {{ tema.numero }}</strong>
+                      <span>{{ tema.titulo }}</span>
+                    </div>
 
-        <button type="button">Ver temas</button>
+                    <button
+                      type="button"
+                      class="tema-item__button"
+                      (click)="seleccionarTema(tema.id)"
+                    >
+                      Ver tema
+                    </button>
+                  </div>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p>Este bloque todavía no tiene temas.</p>
+          }
         </article>
       }
+    </div>
+  }
 
+  @if (cargandoTema()) {
+    <section class="tema-detalle">
+      <p>Cargando tema...</p>
     </section>
+  }
+
+  @if (errorTema()) {
+    <section class="tema-detalle tema-detalle--error">
+      <p>{{ errorTema() }}</p>
+    </section>
+  }
+
+  @if (temaSeleccionado(); as tema) {
+    <section class="tema-detalle">
+      <p class="tema-detalle__bloque">
+        {{ tema.bloque.nombre }}
+      </p>
+
+      <h2>
+        Tema {{ tema.numero }}: {{ tema.titulo }}
+      </h2>
+
+      <div class="tema-detalle__contenido">
+        @if (tema.contenido) {
+          <p>{{ tema.contenido }}</p>
+        } @else {
+          <p>Este tema todavía no tiene contenido.</p>
+        }
+      </div>
+
+      <div class="tema-progreso">
+        <h3>Estado de estudio</h3>
+
+        <div class="tema-progreso__acciones">
+          <button
+            type="button"
+            [class.tema-progreso__button--active]="tema.estado_estudio === 'pendiente'"
+            [attr.aria-pressed]="tema.estado_estudio === 'pendiente'"
+            (click)="cambiarEstadoTema(tema.id, 'pendiente')"
+          >
+            Pendiente
+          </button>
+
+          <button
+            type="button"
+            [class.tema-progreso__button--active]="tema.estado_estudio === 'en curso'"
+            [attr.aria-pressed]="tema.estado_estudio === 'en curso'"
+            (click)="cambiarEstadoTema(tema.id, 'en curso')"
+          >
+            En curso
+          </button>
+
+          <button
+            type="button"
+            [class.tema-progreso__button--active]="tema.estado_estudio === 'completado'"
+            [attr.aria-pressed]="tema.estado_estudio === 'completado'"
+            (click)="cambiarEstadoTema(tema.id, 'completado')"
+          >
+            Completado
+          </button>
+        </div>
+      </div>
+    </section>
+  }
+</section>
+
   </main>
 </div>

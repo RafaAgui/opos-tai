@@ -1,6 +1,6 @@
 
-import { Component, signal, inject, OnInit } from '@angular/core';
-import { Api, HealthResponse, BloqueTemario, DetalleTema  } from './core/services/api';
+import { Component, signal, inject, OnInit, computed  } from '@angular/core';
+import { Api, HealthResponse, BloqueTemario, DetalleTema, EstadoEstudio   } from './core/services/api';
 
 @Component({
   selector: 'app-root',
@@ -28,12 +28,31 @@ export class App implements OnInit {
   readonly cargandoTema = signal(false);
   readonly errorTema = signal('');
 
-  bloques = [
-    { nombre: 'Organización del Estado', temas: 10, progreso: 0 },
-    { nombre: 'Tecnología básica', temas: 15, progreso: 0 },
-    { nombre: 'Desarrollo de sistemas', temas: 12, progreso: 0 },
-    { nombre: 'Sistemas y comunicaciones', temas: 14, progreso: 0 },
-  ];
+  // Estadísticas del temario
+  readonly totalTemas = computed(() =>
+    this.bloquesTemario().reduce(
+      (total, bloque) => total + bloque.temas.length,
+      0
+    )
+  );
+
+  readonly temasCompletados = computed(() =>
+    this.bloquesTemario().reduce(
+      (total, bloque) =>
+        total + bloque.temas.filter(
+          tema => tema.estado_estudio === 'completado'
+        ).length,
+      0
+    )
+  );
+
+  readonly progresoGlobal = computed(() =>
+    this.totalTemas() === 0
+      ? 0
+      : Math.round(
+          (this.temasCompletados() / this.totalTemas()) * 100
+        )
+  );
 
   ngOnInit(): void {
     this.api.getHealth().subscribe({
@@ -91,4 +110,45 @@ export class App implements OnInit {
       },
     });
   }
+
+
+  cambiarEstadoTema(id: number, estado: EstadoEstudio): void {
+    this.api.actualizarEstadoTema(id, estado).subscribe({
+      next: (respuesta) => {
+
+        // Actualizamos el tema que estamos visualizando.
+        this.temaSeleccionado.update(tema =>
+          tema
+            ? { ...tema, estado_estudio: respuesta.estado_estudio }
+            : null
+        );
+
+        // Actualizamos también el listado de temas.
+        this.bloquesTemario.update(bloques =>
+          bloques.map(bloque => ({
+            ...bloque,
+            temas: bloque.temas.map(tema =>
+              tema.id === id
+                ? { ...tema, estado_estudio: respuesta.estado_estudio }
+                : tema
+            )
+          }))
+        );
+      },
+      error: (error) => {
+        console.error('Error al actualizar el estado:', error);
+      }
+    });
+  }
+
+  progresoBloque(bloque: BloqueTemario): number {
+  if (bloque.temas.length === 0) return 0;
+
+  const completados = bloque.temas.filter(
+    tema => tema.estado_estudio === 'completado'
+  ).length;
+
+  return Math.round((completados / bloque.temas.length) * 100);
+}
+
 }

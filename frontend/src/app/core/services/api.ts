@@ -3,6 +3,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
+export type EstadoEstudio = 'pendiente' | 'en curso' | 'completado';
+
 export interface HealthResponse {
   status: string;
   application: string;
@@ -14,6 +17,7 @@ export interface Tema {
   numero: number;
   titulo: string;
   contenido: string | null;
+  estado_estudio: EstadoEstudio;
 }
 
 export interface BloqueTemario {
@@ -28,6 +32,7 @@ export interface DetalleTema {
   numero: number;
   titulo: string;
   contenido: string | null;
+  estado_estudio: EstadoEstudio;
   bloque: {
     id: number;
     nombre: string;
@@ -53,11 +58,21 @@ export class Api {
     );
   }
 
-
   getTema(id: number): Observable<DetalleTema> {
     return this.http.get<DetalleTema>(
       `${this.apiUrl}/api/temas/${id}`,
     );
   }
+
+  actualizarEstadoTema(
+    id: number,
+    estado: EstadoEstudio
+  ): Observable<{ id: number; estado_estudio: EstadoEstudio }> {
+    return this.http.patch<{ id: number; estado_estudio: EstadoEstudio }>(
+      `${this.apiUrl}/api/temas/${id}/estado`,
+      { estado }
+    );
+  }
+
 
 }
