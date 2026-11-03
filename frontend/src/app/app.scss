@@ -610,3 +610,42 @@
     font-size: 0.78rem;
   }
 }
+
+.temario__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.temario__actualizar {
+  padding: 0.65rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.625rem;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #f1f5f9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+@media (max-width: 600px) {
+  .temario__cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

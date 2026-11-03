@@ -108,20 +108,21 @@ export class App implements OnInit {
     });
 
     // Cargar estadísticas de cobertura de contenidos
-    this.api.getResumenContenidos().subscribe({
-      next: (resumen) => {
-        this.resumenContenidos.set(resumen);
-        this.cargandoResumen.set(false);
-        this.errorResumen.set('');
-      },
-      error: (error: unknown) => {
-        console.error('Error al cargar la cobertura:', error);
-        this.cargandoResumen.set(false);
-        this.errorResumen.set(
-          'No se ha podido cargar la cobertura de contenidos.'
-        );
-      },
-    });
+    // this.api.getResumenContenidos().subscribe({
+    //   next: (resumen) => {
+    //     this.resumenContenidos.set(resumen);
+    //     this.cargandoResumen.set(false);
+    //     this.errorResumen.set('');
+    //   },
+    //   error: (error: unknown) => {
+    //     console.error('Error al cargar la cobertura:', error);
+    //     this.cargandoResumen.set(false);
+    //     this.errorResumen.set(
+    //       'No se ha podido cargar la cobertura de contenidos.'
+    //     );
+    //   },
+    // });
+    this.actualizarResumenContenidos();
   }
 
   // Función para seleccionar un tema y cargar sus detalles
@@ -189,5 +190,25 @@ export class App implements OnInit {
     return this.resumenContenidos().find(
       resumen => resumen.bloque_id === bloqueId
     );
+  }
+
+  actualizarResumenContenidos(): void {
+    this.cargandoResumen.set(true);
+    this.errorResumen.set('');
+
+    this.api.getResumenContenidos().subscribe({
+      next: (resumen) => {
+        this.resumenContenidos.set(resumen);
+        this.cargandoResumen.set(false);
+      },
+      error: (error: unknown) => {
+        console.error('Error al actualizar la cobertura:', error);
+
+        this.cargandoResumen.set(false);
+        this.errorResumen.set(
+          'No se ha podido actualizar la cobertura.'
+        );
+      },
+    });
   }
 }

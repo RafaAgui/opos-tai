@@ -68,7 +68,18 @@
 
 
 <section class="temario" id="temario">
-  <h2>Temario de la oposición</h2>
+    <div class="temario__cabecera">
+    <h2>Temario de la oposición</h2>
+
+    <button
+      type="button"
+      class="temario__actualizar"
+      [disabled]="cargandoResumen()"
+      (click)="actualizarResumenContenidos()"
+    >
+      {{ cargandoResumen() ? 'Actualizando...' : 'Actualizar cobertura' }}
+    </button>
+  </div>
 
   @if (cargandoTemario()) {
     <p>Cargando temario...</p>
