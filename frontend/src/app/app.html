@@ -82,9 +82,10 @@
         <article class="topic-card">
           <h3>{{ bloque.nombre }}</h3>
 
+          <!-- Progreso de estudio -->
           <div class="bloque-progreso">
             <div class="bloque-progreso__info">
-              <span>{{ bloque.temas.length }} temas</span>
+              <span>Progreso de estudio</span>
               <strong>{{ progresoBloque(bloque) }} %</strong>
             </div>
 
@@ -94,7 +95,7 @@
               [attr.aria-valuenow]="progresoBloque(bloque)"
               aria-valuemin="0"
               aria-valuemax="100"
-              [attr.aria-label]="'Progreso del bloque: ' + progresoBloque(bloque) + '%'"
+              [attr.aria-label]="'Progreso de estudio: ' + progresoBloque(bloque) + '%'"
             >
               <div
                 class="bloque-progreso__relleno"
@@ -102,7 +103,43 @@
               ></div>
             </div>
           </div>
-          <p>{{ bloque.temas.length }} temas</p>
+
+          <!-- Cobertura de contenidos -->
+          <div class="cobertura-progreso">
+            <div class="cobertura-progreso__info">
+              <span>Cobertura de contenidos</span>
+
+              @if (cargandoResumen()) {
+                <span>Cargando...</span>
+              } @else if (resumenBloque(bloque.id); as resumen) {
+                <strong>{{ resumen.porcentaje }} %</strong>
+              } @else {
+                <strong>--</strong>
+              }
+            </div>
+
+            @if (!cargandoResumen() && resumenBloque(bloque.id); as resumen) {
+              <div
+                class="cobertura-progreso__barra"
+                role="progressbar"
+                [attr.aria-valuenow]="resumen.porcentaje"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                [attr.aria-label]="'Cobertura de contenidos: ' + resumen.porcentaje + '%'"
+              >
+                <div
+                  class="cobertura-progreso__relleno"
+                  [style.width.%]="resumen.porcentaje"
+                ></div>
+              </div>
+
+              <p>
+                {{ resumen.temas_con_contenido }} de
+                {{ resumen.total_temas }} temas documentados
+              </p>
+            }
+          </div>
+
 
           @if (bloque.temas.length > 0) {
             <ul>

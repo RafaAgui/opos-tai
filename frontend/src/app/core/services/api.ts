@@ -27,6 +27,15 @@ export interface BloqueTemario {
   temas: Tema[];
 }
 
+export interface ResumenContenido {
+  bloque_id: number;
+  nombre: string;
+  total_temas: number;
+  temas_con_contenido: number;
+  temas_pendientes: number;
+  porcentaje: number;
+}
+
 export interface DetalleTema {
   id: number;
   numero: number;
@@ -57,6 +66,12 @@ export class Api {
       `${this.apiUrl}/api/temario`,
     );
   }
+
+  getResumenContenidos(): Observable<ResumenContenido[]> {
+  return this.http.get<ResumenContenido[]>(
+    `${this.apiUrl}/api/estadisticas/contenidos`,
+  );
+}
 
   getTema(id: number): Observable<DetalleTema> {
     return this.http.get<DetalleTema>(

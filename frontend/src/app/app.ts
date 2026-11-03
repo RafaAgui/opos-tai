@@ -1,7 +1,7 @@
 
 import { Component, signal, inject, OnInit, computed  } from '@angular/core';
 import { marked } from 'marked';
-import { Api, HealthResponse, BloqueTemario, DetalleTema, EstadoEstudio   } from './core/services/api';
+import { Api, HealthResponse, BloqueTemario, DetalleTema, EstadoEstudio, ResumenContenido   } from './core/services/api';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +28,11 @@ export class App implements OnInit {
   readonly temaSeleccionado = signal<DetalleTema | null>(null);
   readonly cargandoTema = signal(false);
   readonly errorTema = signal('');
+
+  // Estadísticas de cobertura de contenidos
+  readonly resumenContenidos = signal<ResumenContenido[]>([]);
+  readonly cargandoResumen = signal(true);
+  readonly errorResumen = signal('');
 
   // Estadísticas del temario
   readonly totalTemas = computed(() =>
@@ -101,6 +106,22 @@ export class App implements OnInit {
         );
       },
     });
+
+    // Cargar estadísticas de cobertura de contenidos
+    this.api.getResumenContenidos().subscribe({
+      next: (resumen) => {
+        this.resumenContenidos.set(resumen);
+        this.cargandoResumen.set(false);
+        this.errorResumen.set('');
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar la cobertura:', error);
+        this.cargandoResumen.set(false);
+        this.errorResumen.set(
+          'No se ha podido cargar la cobertura de contenidos.'
+        );
+      },
+    });
   }
 
   // Función para seleccionar un tema y cargar sus detalles
@@ -155,13 +176,18 @@ export class App implements OnInit {
   }
 
   progresoBloque(bloque: BloqueTemario): number {
-  if (bloque.temas.length === 0) return 0;
+    if (bloque.temas.length === 0) return 0;
 
-  const completados = bloque.temas.filter(
-    tema => tema.estado_estudio === 'completado'
-  ).length;
+    const completados = bloque.temas.filter(
+      tema => tema.estado_estudio === 'completado'
+    ).length;
 
-  return Math.round((completados / bloque.temas.length) * 100);
-}
+    return Math.round((completados / bloque.temas.length) * 100);
+  }
 
+  resumenBloque(bloqueId: number): ResumenContenido | undefined {
+    return this.resumenContenidos().find(
+      resumen => resumen.bloque_id === bloqueId
+    );
+  }
 }

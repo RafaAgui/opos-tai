@@ -568,3 +568,45 @@
   }
 }
 
+
+/* ========================================
+   COBERTURA DE CONTENIDOS
+======================================== */
+
+.cobertura-progreso {
+  margin: 1rem 0;
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #64748b;
+    font-size: 0.85rem;
+  }
+
+  &__info strong {
+    color: #17243a;
+  }
+
+  &__barra {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #e2e8f0;
+  }
+
+  &__relleno {
+    height: 100%;
+    border-radius: inherit;
+    background: #d49a42;
+    transition: width 0.3s ease;
+  }
+
+  p {
+    margin: 0.4rem 0 0;
+    color: #94a3b8;
+    font-size: 0.78rem;
+  }
+}
