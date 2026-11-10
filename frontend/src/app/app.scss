@@ -97,9 +97,20 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   margin: 24px 0 38px;
+
+  small {
+    color: #64748b;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 1050px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .stat-card,

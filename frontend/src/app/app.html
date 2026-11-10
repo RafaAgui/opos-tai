@@ -64,6 +64,22 @@
     <span>Progreso global</span>
     <strong>{{ progresoGlobal() }} %</strong>
   </article>
+
+  <article class="stat-card">
+  <span>Cobertura de contenidos</span>
+
+  @if (cargandoResumen()) {
+    <strong>...</strong>
+  } @else if (errorResumen()) {
+    <strong>--</strong>
+  } @else {
+    <strong>{{ coberturaGlobal() }} %</strong>
+
+    <small>
+      {{ totalTemasConContenido() }} de {{ totalTemas() }} temas documentados
+    </small>
+  }
+</article>
 </section>
 
 

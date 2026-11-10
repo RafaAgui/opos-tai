@@ -60,6 +60,27 @@ export class App implements OnInit {
         )
   );
 
+  // Estadísticas globales de cobertura de contenidos
+  readonly totalTemasConContenido = computed(() =>
+    this.resumenContenidos().reduce(
+      (total, bloque) => total + bloque.temas_con_contenido,
+      0
+    )
+  );
+
+  readonly coberturaGlobal = computed(() => {
+    const total = this.resumenContenidos().reduce(
+      (suma, bloque) => suma + bloque.total_temas,
+      0
+    );
+
+    if (total === 0) return 0;
+
+    return Math.round(
+      (this.totalTemasConContenido() / total) * 100
+    );
+  });
+
   readonly contenidoHtml = computed(() => {
     const tema = this.temaSeleccionado();
 
@@ -106,22 +127,6 @@ export class App implements OnInit {
         );
       },
     });
-
-    // Cargar estadísticas de cobertura de contenidos
-    // this.api.getResumenContenidos().subscribe({
-    //   next: (resumen) => {
-    //     this.resumenContenidos.set(resumen);
-    //     this.cargandoResumen.set(false);
-    //     this.errorResumen.set('');
-    //   },
-    //   error: (error: unknown) => {
-    //     console.error('Error al cargar la cobertura:', error);
-    //     this.cargandoResumen.set(false);
-    //     this.errorResumen.set(
-    //       'No se ha podido cargar la cobertura de contenidos.'
-    //     );
-    //   },
-    // });
     this.actualizarResumenContenidos();
   }
 
