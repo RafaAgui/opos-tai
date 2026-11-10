@@ -126,6 +126,34 @@ export class App implements OnInit {
       .filter(bloque => bloque.temas.length > 0);
   });
 
+  // Lista completa de temas ordenados por bloque y número
+  readonly todosLosTemas = computed(() =>
+    this.bloquesTemario().flatMap(bloque =>
+      [...bloque.temas].sort((a, b) => a.numero - b.numero)
+    )
+  );
+
+  readonly hayTemaAnterior = computed(() => {
+    const actual = this.temaSeleccionado();
+
+    if (!actual) return false;
+
+    return this.todosLosTemas().findIndex(
+      tema => tema.id === actual.id
+    ) > 0;
+  });
+
+  readonly hayTemaSiguiente = computed(() => {
+    const actual = this.temaSeleccionado();
+
+    if (!actual) return false;
+
+    const temas = this.todosLosTemas();
+    const indice = temas.findIndex(tema => tema.id === actual.id);
+
+    return indice >= 0 && indice < temas.length - 1;
+  });
+
   ngOnInit(): void {
     this.api.getHealth().subscribe({
       next: (respuesta) => {
@@ -254,5 +282,33 @@ export class App implements OnInit {
     this.textoBusqueda.set('');
     this.bloqueSeleccionado.set(null);
     this.estadoSeleccionado.set('todos');
+  }
+
+  // Navegar al tema anterior
+  temaAnterior(): void {
+    const actual = this.temaSeleccionado();
+
+    if (!actual) return;
+
+    const temas = this.todosLosTemas();
+    const indice = temas.findIndex(tema => tema.id === actual.id);
+
+    if (indice > 0) {
+      this.seleccionarTema(temas[indice - 1].id);
+    }
+  }
+
+  // Navegar al tema siguiente
+  temaSiguiente(): void {
+    const actual = this.temaSeleccionado();
+
+    if (!actual) return;
+
+    const temas = this.todosLosTemas();
+    const indice = temas.findIndex(tema => tema.id === actual.id);
+
+    if (indice >= 0 && indice < temas.length - 1) {
+      this.seleccionarTema(temas[indice + 1].id);
+    }
   }
 }

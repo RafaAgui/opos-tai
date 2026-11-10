@@ -272,6 +272,33 @@
       <p class="tema-detalle__bloque">
         {{ tema.bloque.nombre }}
       </p>
+
+      <nav class="tema-navegacion" aria-label="Navegación entre temas">
+        <button
+          type="button"
+          class="tema-navegacion__button"
+          [disabled]="!hayTemaAnterior() || cargandoTema()"
+          (click)="temaAnterior()"
+        >
+          <span aria-hidden="true">←</span>
+          Tema anterior
+        </button>
+
+        <span class="tema-navegacion__posicion">
+          Tema {{ tema.numero }}
+        </span>
+
+        <button
+          type="button"
+          class="tema-navegacion__button"
+          [disabled]="!hayTemaSiguiente() || cargandoTema()"
+          (click)="temaSiguiente()"
+        >
+          Tema siguiente
+          <span aria-hidden="true">→</span>
+        </button>
+      </nav>
+
       <div class="tema-detalle__contenido">
         @if (tema.contenido) {
           <div [innerHTML]="contenidoHtml()"></div>
