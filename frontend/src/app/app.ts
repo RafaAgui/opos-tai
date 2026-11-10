@@ -34,6 +34,11 @@ export class App implements OnInit {
   readonly cargandoResumen = signal(true);
   readonly errorResumen = signal('');
 
+  // Buscador y filtros del temario
+  readonly textoBusqueda = signal('');
+  readonly bloqueSeleccionado = signal<number | null>(null);
+  readonly estadoSeleccionado = signal<EstadoEstudio | 'todos'>('todos');
+
   // Estadísticas del temario
   readonly totalTemas = computed(() =>
     this.bloquesTemario().reduce(
@@ -91,6 +96,34 @@ export class App implements OnInit {
     return marked.parse(tema.contenido, {
       async: false
     });
+  });
+
+  // Temario filtrado para mostrar en pantalla
+  readonly bloquesFiltrados = computed(() => {
+    const texto = this.textoBusqueda().trim().toLowerCase();
+    const bloqueId = this.bloqueSeleccionado();
+    const estado = this.estadoSeleccionado();
+
+    return this.bloquesTemario()
+      .filter(bloque =>
+        bloqueId === null || bloque.id === bloqueId
+      )
+      .map(bloque => ({
+        ...bloque,
+        temas: bloque.temas.filter(tema => {
+          const coincideTexto =
+            texto === '' ||
+            tema.titulo.toLowerCase().includes(texto) ||
+            String(tema.numero).includes(texto);
+
+          const coincideEstado =
+            estado === 'todos' ||
+            tema.estado_estudio === estado;
+
+          return coincideTexto && coincideEstado;
+        })
+      }))
+      .filter(bloque => bloque.temas.length > 0);
   });
 
   ngOnInit(): void {
@@ -215,5 +248,11 @@ export class App implements OnInit {
         );
       },
     });
+  }
+
+  limpiarFiltros(): void {
+    this.textoBusqueda.set('');
+    this.bloqueSeleccionado.set(null);
+    this.estadoSeleccionado.set('todos');
   }
 }

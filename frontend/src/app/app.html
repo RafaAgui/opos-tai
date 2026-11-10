@@ -84,7 +84,7 @@
 
 
 <section class="temario" id="temario">
-    <div class="temario__cabecera">
+  <div class="temario__cabecera">
     <h2>Temario de la oposición</h2>
 
     <button
@@ -97,6 +97,58 @@
     </button>
   </div>
 
+  <!-- Buscador y filtros -->
+  <div class="temario-filtros">
+
+    <div class="temario-filtros__busqueda">
+      <label for="buscar-tema">Buscar tema</label>
+      <input
+        id="buscar-tema"
+        type="search"
+        placeholder="Buscar por título o número..."
+        [value]="textoBusqueda()"
+        (input)="textoBusqueda.set($any($event.target).value)"
+      />
+    </div>
+
+    <div class="temario-filtros__campo">
+      <label for="filtro-bloque">Bloque</label>
+      <select
+        id="filtro-bloque"
+        [value]="bloqueSeleccionado() ?? ''"
+        (change)="bloqueSeleccionado.set($any($event.target).value === '' ? null : +$any($event.target).value)"
+      >
+        <option value="">Todos los bloques</option>
+        @for (bloque of bloquesTemario(); track bloque.id) {
+          <option [value]="bloque.id">{{ bloque.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="temario-filtros__campo">
+      <label for="filtro-estado">Estado de estudio</label>
+      <select
+        id="filtro-estado"
+        [value]="estadoSeleccionado()"
+        (change)="estadoSeleccionado.set($any($event.target).value)"
+      >
+        <option value="todos">Todos los estados</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="en curso">En curso</option>
+        <option value="completado">Completado</option>
+      </select>
+    </div>
+
+    <button
+      type="button"
+      class="temario-filtros__limpiar"
+      (click)="limpiarFiltros()"
+    >
+      Limpiar filtros
+    </button>
+
+  </div>
+
   @if (cargandoTemario()) {
     <p>Cargando temario...</p>
   } @else if (errorTemario()) {
@@ -104,8 +156,13 @@
   } @else if (bloquesTemario().length === 0) {
     <p>Todavía no hay bloques en el temario.</p>
   } @else {
-    <div class="temario__grid">
-      @for (bloque of bloquesTemario(); track bloque.id) {
+    @if (bloquesFiltrados().length === 0) {
+      <p class="temario__sin-resultados">
+        No se han encontrado temas con los filtros seleccionados.
+      </p>
+      } @else {
+      <div class="temario__grid">
+        @for (bloque of bloquesFiltrados(); track bloque.id) {
         <article class="topic-card">
           <h3>{{ bloque.nombre }}</h3>
 
@@ -195,6 +252,7 @@
         </article>
       }
     </div>
+  }
   }
 
   @if (cargandoTema()) {
