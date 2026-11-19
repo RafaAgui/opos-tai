@@ -1,4 +1,4 @@
-**Bloque II. Tecnología básica — Cuerpo de Técnicos Auxiliares de Informática (TAI), Administración General del Estado**
+# Tema 5. Sistemas de gestión de bases de datos relacionales, orientados a objetos y NoSQL: características y componentes
 
 > **Denominación oficial:** Sistemas de gestión de bases de datos relacionales, orientados a objetos y NoSQL: características y componentes.
 

@@ -1,4 +1,3 @@
-
 /* ========================================
    CONTENIDO MARKDOWN - APUNTES
 ======================================== */
@@ -7,195 +6,154 @@
   margin-top: 2rem;
   color: #334155;
   font-size: 1rem;
-  line-height: 1.2;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
 
-  /* Títulos */
-  h1,
-  h2,
-  h3,
-  h4 {
+  > :first-child { margin-top: 0; }
+  > :last-child { margin-bottom: 0; }
+
+  h1, h2, h3, h4 {
     color: #17243a;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    scroll-margin-top: 1.5rem;
   }
 
   h1 {
-    margin: 2.5rem 0 1.25rem;
+    margin: 2.75rem 0 1.25rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid #e2e8f0;
-    font-size: 1.8rem;
+    border-bottom: 2px solid #dbe4ee;
+    font-size: clamp(1.6rem, 3vw, 2rem);
   }
 
   h2 {
-    margin: 2.25rem 0 1rem;
-    padding-bottom: 0.5rem;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.55rem;
     border-bottom: 1px solid #e2e8f0;
-    font-size: 1.45rem;
+    font-size: clamp(1.3rem, 2.5vw, 1.55rem);
   }
 
-  h3 {
-    margin: 1.75rem 0 0.75rem;
-    font-size: 1.15rem;
-  }
+  h3 { margin: 2rem 0 0.75rem; font-size: 1.2rem; }
+  h4 { margin: 1.5rem 0 0.6rem; font-size: 1.05rem; }
+  p { margin: 0 0 1.15rem; }
+  strong { color: #17243a; font-weight: 700; }
+  em { color: #475569; }
 
-  h4 {
-    margin: 1.5rem 0 0.5rem;
-    font-size: 1rem;
-  }
-
-  /* Párrafos */
-  p {
-    margin: 0 0 1rem;
-  }
-
-  /* Negritas */
-  strong {
-    color: #17243a;
-    font-weight: 700;
-  }
-
-  /* Listas */
-  ul,
-  ol {
-    margin: 0 0 1.25rem;
+  ul, ol {
+    margin: 0 0 1.4rem;
     padding-left: 1.75rem;
   }
 
-  li {
-    margin-bottom: 0.5rem;
-    padding-left: 0.25rem;
-  }
+  li { margin-bottom: 0.55rem; padding-left: 0.25rem; }
+  li::marker { color: #176b5b; font-weight: 700; }
+  li > ul, li > ol { margin-top: 0.6rem; margin-bottom: 0.6rem; }
 
-  li::marker {
-    color: #176b5b;
-    font-weight: 700;
-  }
-
-  /* Enlaces */
   a {
     color: #176b5b;
     text-decoration: underline;
+    text-decoration-thickness: 1px;
     text-underline-offset: 3px;
 
-    &:hover {
-      color: #0f4f43;
-    }
-
+    &:hover { color: #0f4f43; }
     &:focus-visible {
+      border-radius: 2px;
       outline: 2px solid #176b5b;
       outline-offset: 3px;
     }
   }
 
-  /* Tablas */
   table {
+    display: block;
     width: 100%;
     margin: 1.5rem 0 2rem;
+    overflow-x: auto;
     border-collapse: collapse;
     font-size: 0.9rem;
     line-height: 1.6;
+    -webkit-overflow-scrolling: touch;
   }
 
-  th,
-  td {
-    padding: 0.85rem 1rem;
-    border: 1px solid #e2e8f0;
+  th, td {
+    min-width: 120px;
+    padding: 0.8rem 1rem;
+    border: 1px solid #dbe4ee;
     text-align: left;
     vertical-align: top;
   }
 
-  th {
-    background: #f1f5f9;
-    color: #17243a;
-    font-weight: 700;
-  }
+  th { background: #edf3f7; color: #17243a; font-weight: 700; }
+  tr:nth-child(even) td { background: #f8fafc; }
 
-  tr:nth-child(even) td {
-    background: #f8fafc;
-  }
-
-  /* Código */
   code {
     padding: 0.15rem 0.4rem;
-    border-radius: 4px;
-    background: #eef2f7;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.35rem;
+    background: #f1f5f9;
     color: #9d174d;
-    font-family: Consolas, Monaco, monospace;
+    font-family: Consolas, Monaco, 'Courier New', monospace;
     font-size: 0.875em;
+    overflow-wrap: anywhere;
   }
 
   pre {
-    margin: 1.5rem 0;
-    padding: 1.25rem;
+    margin: 1.5rem 0 2rem;
+    padding: 1.25rem 1.4rem;
     overflow-x: auto;
+    border: 1px solid #293a54;
     border-radius: 0.75rem;
     background: #17243a;
     color: #e2e8f0;
-    line-height: 1.6;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    tab-size: 2;
+    -webkit-overflow-scrolling: touch;
 
     code {
       padding: 0;
+      border: 0;
+      border-radius: 0;
       background: transparent;
       color: inherit;
-      font-size: 0.9rem;
+      font-size: inherit;
+      overflow-wrap: normal;
     }
   }
 
-  /* Citas */
   blockquote {
     margin: 1.5rem 0;
     padding: 1rem 1.25rem;
     border-left: 4px solid #35a88e;
-    border-radius: 0 0.5rem 0.5rem 0;
+    border-radius: 0 0.6rem 0.6rem 0;
     background: #f0f9f6;
     color: #475569;
 
-    p:last-child {
-      margin-bottom: 0;
-    }
+    p:last-child { margin-bottom: 0; }
   }
 
-  /* Separadores */
-  hr {
-    margin: 2rem 0;
-    border: 0;
-    border-top: 1px solid #e2e8f0;
-  }
+  hr { margin: 2.25rem 0; border: 0; border-top: 1px solid #dbe4ee; }
 
-  /* Imágenes */
   img {
     display: block;
     max-width: 100%;
     height: auto;
-    margin: 1.5rem auto;
+    margin: 1.75rem auto;
     border-radius: 0.75rem;
   }
 }
 
-/* Tablas adaptables a móviles */
 @media (max-width: 650px) {
   .tema-detalle__contenido {
+    margin-top: 1.5rem;
     font-size: 0.95rem;
+    line-height: 1.7;
 
-    h1 {
-      font-size: 1.5rem;
-    }
-
-    h2 {
-      font-size: 1.25rem;
-    }
-
-    table {
-      display: block;
-      overflow-x: auto;
-      white-space: normal;
-    }
-
-    th,
-    td {
-      min-width: 120px;
-      padding: 0.65rem;
-    }
+    h1, h2 { margin-top: 2rem; }
+    pre { padding: 1rem; font-size: 0.82rem; }
+    th, td { min-width: 110px; padding: 0.65rem 0.75rem; }
   }
 }
-/* You can add global styles to this file, and also import other style files */
+
+@media (prefers-reduced-motion: reduce) {
+  .tema-detalle__contenido { scroll-behavior: auto; }
+}
