@@ -1,0 +1,48 @@
+<div class="temario-filtros">
+  <div class="temario-filtros__busqueda">
+    <label for="buscar-tema">Buscar tema</label>
+    <input
+      id="buscar-tema"
+      type="search"
+      placeholder="Buscar por título o número..."
+      [value]="textoBusqueda()"
+      (input)="textoBusqueda.set($any($event.target).value)"
+    />
+  </div>
+
+  <div class="temario-filtros__campo">
+    <label for="filtro-bloque">Bloque</label>
+    <select
+      id="filtro-bloque"
+      [value]="bloqueSeleccionado() ?? ''"
+      (change)="onBloqueChange($event)"
+    >
+      <option value="">Todos los bloques</option>
+      @for (bloque of bloques(); track bloque.id) {
+        <option [value]="bloque.id">{{ bloque.nombre }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="temario-filtros__campo">
+    <label for="filtro-estado">Estado de estudio</label>
+    <select
+      id="filtro-estado"
+      [value]="estadoSeleccionado()"
+      (change)="onEstadoChange($event)"
+    >
+      <option value="todos">Todos los estados</option>
+      <option value="pendiente">Pendiente</option>
+      <option value="en curso">En curso</option>
+      <option value="completado">Completado</option>
+    </select>
+  </div>
+
+  <button
+    type="button"
+    class="temario-filtros__limpiar"
+    (click)="limpiar.emit()"
+  >
+    Limpiar filtros
+  </button>
+</div>

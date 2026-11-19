@@ -1,0 +1,19 @@
+<div class="tema-page">
+  <div class="tema-page__cabecera">
+    <a routerLink="/temario" class="volver-link">
+      <span aria-hidden="true">←</span>
+      Volver al temario
+    </a>
+  </div>
+
+  <app-tema-detalle
+    [tema]="tema()"
+    [cargando]="cargando()"
+    [error]="error()"
+    [hayAnterior]="hayAnterior()"
+    [haySiguiente]="haySiguiente()"
+    (anterior)="temaAnterior()"
+    (siguiente)="temaSiguiente()"
+    (cambiarEstado)="cambiarEstado($event)"
+  />
+</div>

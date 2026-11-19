@@ -1,0 +1,56 @@
+:host {
+  display: block;
+}
+
+.tema-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+
+    strong {
+      color: #334155;
+      font-weight: 600;
+    }
+
+    span {
+      overflow-wrap: anywhere;
+      color: #475569;
+    }
+  }
+
+  &__button {
+    flex-shrink: 0;
+    padding: 0.5rem 0.875rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    background: #fff;
+    color: #334155;
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: #f1f5f9;
+    }
+
+    &:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 2px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .tema-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,60 @@
+<article class="topic-card">
+  <h3>{{ bloque().nombre }}</h3>
+
+  <!-- Progreso de estudio -->
+  <div class="bloque-progreso">
+    <div class="bloque-progreso__info">
+      <span>Progreso de estudio</span>
+      <strong>{{ progresoEstudio() }} %</strong>
+    </div>
+
+    <app-progress-bar
+      [value]="progresoEstudio()"
+      variant="primary"
+      [label]="'Progreso de estudio: ' + progresoEstudio() + '%'"
+    />
+  </div>
+
+  <!-- Cobertura de contenidos -->
+  <div class="cobertura-progreso">
+    <div class="cobertura-progreso__info">
+      <span>Cobertura de contenidos</span>
+
+      @if (cargandoResumen()) {
+        <span>Cargando...</span>
+      } @else if (resumen(); as res) {
+        <strong>{{ res.porcentaje }} %</strong>
+      } @else {
+        <strong>--</strong>
+      }
+    </div>
+
+    @if (!cargandoResumen() && resumen(); as res) {
+      <app-progress-bar
+        [value]="res.porcentaje"
+        variant="warning"
+        [label]="'Cobertura de contenidos: ' + res.porcentaje + '%'"
+      />
+
+      <p>
+        {{ res.temas_con_contenido }} de
+        {{ res.total_temas }} temas documentados
+      </p>
+    }
+  </div>
+
+  @if (bloque().temas.length > 0) {
+    <ul>
+      @for (tema of bloque().temas; track tema.id) {
+        <li>
+          <app-tema-item
+            [tema]="tema"
+            (seleccionar)="seleccionarTema.emit($event)"
+          />
+        </li>
+      }
+    </ul>
+  } @else {
+    <p>Este bloque todavía no tiene temas.</p>
+  }
+</article>

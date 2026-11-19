@@ -1,0 +1,69 @@
+@if (cargando()) {
+  <section class="tema-detalle">
+    <p>Cargando tema...</p>
+  </section>
+}
+
+@if (error()) {
+  <section class="tema-detalle tema-detalle--error">
+    <p>{{ error() }}</p>
+  </section>
+}
+
+@if (tema(); as t) {
+  <section class="tema-detalle">
+    <p class="tema-detalle__bloque">
+      {{ t.bloque.nombre }}
+    </p>
+
+    <app-tema-navegacion
+      [numeroTema]="t.numero"
+      [hayAnterior]="hayAnterior()"
+      [haySiguiente]="haySiguiente()"
+      [cargando]="cargando()"
+      (anterior)="anterior.emit()"
+      (siguiente)="siguiente.emit()"
+    />
+
+    <div class="tema-detalle__contenido">
+      @if (t.contenido) {
+        <div [innerHTML]="t.contenido | markdown"></div>
+      } @else {
+        <p>Este tema todavía no tiene contenido.</p>
+      }
+    </div>
+
+    <div class="tema-progreso">
+      <h3>Estado de estudio</h3>
+
+      <div class="tema-progreso__acciones">
+        <button
+          type="button"
+          [class.tema-progreso__button--active]="t.estado_estudio === 'pendiente'"
+          [attr.aria-pressed]="t.estado_estudio === 'pendiente'"
+          (click)="cambiarEstado.emit({ id: t.id, estado: 'pendiente' })"
+        >
+          Pendiente
+        </button>
+
+        <button
+          type="button"
+          [class.tema-progreso__button--active]="t.estado_estudio === 'en curso'"
+          [attr.aria-pressed]="t.estado_estudio === 'en curso'"
+          (click)="cambiarEstado.emit({ id: t.id, estado: 'en curso' })"
+        >
+          En curso
+        </button>
+
+        <button
+          type="button"
+          [class.tema-progreso__button--active]="t.estado_estudio === 'completado'"
+          [attr.aria-pressed]="t.estado_estudio === 'completado'"
+          (click)="cambiarEstado.emit({ id: t.id, estado: 'completado' })"
+        >
+          Completado
+        </button>
+      </div>
+    </div>
+  </section>
+}

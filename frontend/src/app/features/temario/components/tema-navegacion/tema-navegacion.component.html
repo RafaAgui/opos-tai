@@ -1,0 +1,25 @@
+<nav class="tema-navegacion" aria-label="Navegación entre temas">
+  <button
+    type="button"
+    class="tema-navegacion__button"
+    [disabled]="!hayAnterior() || cargando()"
+    (click)="anterior.emit()"
+  >
+    <span aria-hidden="true">←</span>
+    Tema anterior
+  </button>
+
+  <span class="tema-navegacion__posicion">
+    Tema {{ numeroTema() }}
+  </span>
+
+  <button
+    type="button"
+    class="tema-navegacion__button"
+    [disabled]="!haySiguiente() || cargando()"
+    (click)="siguiente.emit()"
+  >
+    Tema siguiente
+    <span aria-hidden="true">→</span>
+  </button>
+</nav>

@@ -1,0 +1,34 @@
+:host {
+  display: block;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 30px;
+
+  &__eyebrow {
+    margin: 0 0 8px;
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  &__title {
+    margin: 4px 0;
+    color: #17243a;
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  &__tag {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #e4f5f1;
+    color: #176b5b;
+    font-weight: 600;
+  }
+}

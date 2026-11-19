@@ -1,0 +1,14 @@
+<div class="tema-item">
+  <div class="tema-item__info">
+    <strong>Tema {{ tema().numero }}</strong>
+    <span>{{ tema().titulo }}</span>
+  </div>
+
+  <button
+    type="button"
+    class="tema-item__button"
+    (click)="seleccionar.emit(tema().id)"
+  >
+    Ver tema
+  </button>
+</div>

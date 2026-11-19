@@ -1,0 +1,17 @@
+<article class="stat-card">
+  <span class="stat-card__label">{{ label() }}</span>
+
+  @if (loading()) {
+    <strong class="stat-card__value">...</strong>
+  } @else if (hasError()) {
+    <strong class="stat-card__value">--</strong>
+  } @else {
+    <strong class="stat-card__value">{{ value() }}</strong>
+  }
+
+  @if (helperText() && !loading() && !hasError()) {
+    <small class="stat-card__helper">{{ helperText() }}</small>
+  }
+
+  <ng-content></ng-content>
+</article>
