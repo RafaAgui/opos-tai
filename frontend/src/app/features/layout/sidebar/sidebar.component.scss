@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+
+.sidebar {
+  padding: 28px 22px;
+  background: #17243a;
+  color: #fff;
+  min-height: 100%;
+  box-sizing: border-box;
+
+  &__logo {
+    margin: 0 0 35px;
+    font-size: 1.5rem;
+
+    span {
+      color: #70d6c0;
+    }
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__link {
+    padding: 12px;
+    border-radius: 8px;
+    color: #c4cede;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover,
+    &--active {
+      background: #293a54;
+      color: #fff;
+    }
+  }
+}
+
+@media (min-width: 900px) {
+  .sidebar {
+    min-height: 100vh;
+  }
+}

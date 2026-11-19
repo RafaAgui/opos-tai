@@ -1,0 +1,100 @@
+<section class="welcome">
+  <h2>Avanza tema a tema.</h2>
+  <p>Organiza tu estudio, practica y aprende con ayuda de la IA.</p>
+</section>
+
+<section class="backend-status">
+  <div class="backend-status__heading">
+    <h3>Conexión con el servidor</h3>
+
+    <span
+      class="backend-status__badge"
+      [class.backend-status__badge--online]="backendConectado()"
+      [class.backend-status__badge--offline]="errorBackend()"
+    >
+      {{ estadoBackend() }}
+    </span>
+  </div>
+
+  @if (respuestaBackend(); as respuesta) {
+    <p>{{ respuesta.message }}</p>
+  }
+
+  @if (errorBackend(); as error) {
+    <p>{{ error }}</p>
+  }
+</section>
+
+<section class="stats" id="progreso">
+  <app-stat-card
+    label="Temas totales"
+    [value]="temarioService.totalTemas()"
+  />
+
+  <app-stat-card
+    label="Temas completados"
+    [value]="temarioService.temasCompletados()"
+  />
+
+  <app-stat-card
+    label="Progreso global"
+    [value]="temarioService.progresoGlobal() + ' %'"
+  />
+
+  <app-stat-card
+    label="Cobertura de contenidos"
+    [value]="temarioService.coberturaGlobal() + ' %'"
+    [loading]="temarioService.cargandoResumen()"
+    [hasError]="!!temarioService.errorResumen()"
+    [helperText]="temarioService.totalTemasConContenido() + ' de ' + temarioService.totalTemas() + ' temas documentados'"
+  />
+</section>
+
+<section class="temario" id="temario">
+  <div class="temario__cabecera">
+    <h2>Temario de la oposición</h2>
+
+    <button
+      type="button"
+      class="temario__actualizar"
+      [disabled]="temarioService.cargandoResumen()"
+      (click)="actualizarCobertura()"
+    >
+      {{ temarioService.cargandoResumen() ? 'Actualizando...' : 'Actualizar cobertura' }}
+    </button>
+  </div>
+
+  <!-- Buscador y filtros -->
+  <app-temario-filtros
+    [bloques]="temarioService.bloques()"
+    [(textoBusqueda)]="textoBusqueda"
+    [(bloqueSeleccionado)]="bloqueSeleccionado"
+    [(estadoSeleccionado)]="estadoSeleccionado"
+    (limpiar)="limpiarFiltros()"
+  />
+
+  @if (temarioService.cargandoTemario()) {
+    <p>Cargando temario...</p>
+  } @else if (temarioService.errorTemario()) {
+    <p class="temario__error">{{ temarioService.errorTemario() }}</p>
+  } @else if (temarioService.bloques().length === 0) {
+    <p>Todavía no hay bloques en el temario.</p>
+  } @else {
+    @if (bloquesFiltrados().length === 0) {
+      <p class="temario__sin-resultados">
+        No se han encontrado temas con los filtros seleccionados.
+      </p>
+    } @else {
+      <div class="temario__grid">
+        @for (bloque of bloquesFiltrados(); track bloque.id) {
+          <app-bloque-card
+            [bloque]="bloque"
+            [resumen]="temarioService.resumenBloque(bloque.id)"
+            [cargandoResumen]="temarioService.cargandoResumen()"
+            (seleccionarTema)="navegarATema($event)"
+          />
+        }
+      </div>
+    }
+  }
+</section>

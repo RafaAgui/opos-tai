@@ -1,14 +1,14 @@
-
-import { Component, signal, inject, OnInit, computed  } from '@angular/core';
-import { marked } from 'marked';
-import { Api, HealthResponse, BloqueTemario, DetalleTema, EstadoEstudio, ResumenContenido   } from './core/services/api';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { SidebarComponent, HeaderComponent } from './features/layout';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet, SidebarComponent, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App implements OnInit {
   private readonly api = inject(Api);
