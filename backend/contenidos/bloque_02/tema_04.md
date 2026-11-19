@@ -1,3 +1,5 @@
+# Tema 4. Sistemas operativos
+
 ## 1. Concepto y finalidad de un sistema operativo
 
 Un **sistema operativo (SO)** es el conjunto de programas que gestiona los recursos físicos y lógicos de un equipo y proporciona servicios a los programas de aplicación. Actúa como intermediario entre el hardware, las aplicaciones y los usuarios.

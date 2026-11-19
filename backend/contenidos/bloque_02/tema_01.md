@@ -1,6 +1,4 @@
-# Bloque II. Tecnología básica
-
-## Tema 1. Informática básica. Representación y comunicación de la información: elementos constitutivos de un sistema de información. Características y funciones. Arquitectura de ordenadores. Componentes internos de los equipos microinformáticos.
+# Tema 1. Informática básica. Representación y comunicación de la información: elementos constitutivos de un sistema de información. Características y funciones. Arquitectura de ordenadores. Componentes internos de los equipos microinformáticos.
 
 Tema 1 · Desarrollo de estudio
 
@@ -657,7 +655,7 @@ Entre sus características:
 
 No debemos confundir UEFI con el sistema operativo: UEFI se ejecuta antes de que se cargue este.
 
-# 7. Esquema general para memorizar
+## 7. Esquema general para memorizar
 
 [Parts of a Computer and Their Functions (With Visual Diagram)](https://images.openai.com/static-rsc-4/O6OXAeb7GHl-9oJfHUZIQyMWFD1dOK2ICB3nCWWwCo5L5R4tg3c5ixmq7IsuebtlA9oZyH2ybTn3xiORjft-4ZYfXMNicKYTByATldmExa-FG-aTQfiYcY0saCvGhheZXkkIvTv4b5iNNJ2R_sK9g5l4NxDEQEgGU7SJ33ASoxk?purpose=inline)
 
@@ -680,7 +678,7 @@ No debemos confundir UEFI con el sistema operativo: UEFI se ejecuta antes de que
 | Disipador              | Evacuar calor                                   |
 | UEFI                   | Inicializar el hardware y facilitar el arranque |
 
-# 8. Conceptos especialmente importantes para el examen
+## 8. Conceptos especialmente importantes para el examen
 
 Estos son algunos de los contrastes que conviene dominar:
 
@@ -697,7 +695,7 @@ Estos son algunos de los contrastes que conviene dominar:
 | Simplex     | Full-duplex | Un sentido frente a ambos sentidos simultáneos                      |
 | M.2         | NVMe        | Formato físico frente a protocolo                                   |
 
-# 9. Resumen del tema
+## 9. Resumen del tema
 
 1. La informática estudia el tratamiento automático de la información.
 2. Los datos son la materia prima; la información es el resultado de procesarlos y contextualizarlos.
@@ -715,7 +713,7 @@ Estos son algunos de los contrastes que conviene dominar:
 14. El SSD utiliza memoria flash, mientras que el HDD utiliza almacenamiento magnético mecánico.
 15. UEFI es el firmware moderno utilizado para inicializar el hardware y facilitar el arranque.
 
-# 10. Test de autoevaluación
+## 10. Test de autoevaluación
 
 Te propongo 15 preguntas de dificultad progresiva. Cada pregunta tiene cuatro opciones y una sola respuesta correcta.
 

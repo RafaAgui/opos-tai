@@ -1,6 +1,4 @@
-# Bloque II. Tecnología básica
-
-## Tema 2. Periféricos: conectividad y administración. Elementos de impresión. Elementos de almacenamiento. Elementos de visualización y digitalización
+# Tema 2. Periféricos: conectividad y administración. Elementos de impresión. Elementos de almacenamiento. Elementos de visualización y digitalización
 
 **TAI – Cuerpo de Técnicos Auxiliares de Informática – AGE – C1**
 
