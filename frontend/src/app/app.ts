@@ -28,6 +28,8 @@ export class App implements OnInit {
   readonly temaSeleccionado = signal<DetalleTema | null>(null);
   readonly cargandoTema = signal(false);
   readonly errorTema = signal('');
+  readonly guardandoEstado = signal(false);
+  readonly errorEstado = signal('');
 
   // Estadísticas de cobertura de contenidos
   readonly resumenContenidos = signal<ResumenContenido[]>([]);
@@ -196,6 +198,7 @@ export class App implements OnInit {
     this.temaSeleccionado.set(null);
     this.cargandoTema.set(true);
     this.errorTema.set('');
+    this.errorEstado.set('');
 
     this.api.getTema(id).subscribe({
       next: (tema) => {
@@ -212,11 +215,29 @@ export class App implements OnInit {
     });
   }
 
+  obtenerTextoEstado(estado: EstadoEstudio): string {
+    switch (estado) {
+      case 'pendiente':
+        return 'Pendiente';
+      case 'en curso':
+        return 'En curso';
+      case 'completado':
+        return 'Completado';
+      default:
+        return estado;
+    }
+  }
 
   cambiarEstadoTema(id: number, estado: EstadoEstudio): void {
+    if (this.guardandoEstado()) {
+      return;
+    }
+
+    this.guardandoEstado.set(true);
+    this.errorEstado.set('');
+
     this.api.actualizarEstadoTema(id, estado).subscribe({
       next: (respuesta) => {
-
         // Actualizamos el tema que estamos visualizando.
         this.temaSeleccionado.update(tema =>
           tema
@@ -235,9 +256,15 @@ export class App implements OnInit {
             )
           }))
         );
+
+        this.guardandoEstado.set(false);
       },
-      error: (error) => {
+      error: (error: unknown) => {
         console.error('Error al actualizar el estado:', error);
+        this.guardandoEstado.set(false);
+        this.errorEstado.set(
+          'No se ha podido guardar el cambio de estado. Por favor, inténtalo de nuevo.'
+        );
       }
     });
   }

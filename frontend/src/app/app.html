@@ -231,7 +231,17 @@
                 <li>
                   <div class="tema-item">
                     <div class="tema-item__info">
-                      <strong>Tema {{ tema.numero }}</strong>
+                      <div class="tema-item__cabecera">
+                        <strong>Tema {{ tema.numero }}</strong>
+                        <span
+                          class="tema-estado-badge"
+                          [class.tema-estado-badge--pendiente]="tema.estado_estudio === 'pendiente'"
+                          [class.tema-estado-badge--en-curso]="tema.estado_estudio === 'en curso'"
+                          [class.tema-estado-badge--completado]="tema.estado_estudio === 'completado'"
+                        >
+                          {{ obtenerTextoEstado(tema.estado_estudio) }}
+                        </span>
+                      </div>
                       <span>{{ tema.titulo }}</span>
                     </div>
 
@@ -315,6 +325,7 @@
             type="button"
             [class.tema-progreso__button--active]="tema.estado_estudio === 'pendiente'"
             [attr.aria-pressed]="tema.estado_estudio === 'pendiente'"
+            [disabled]="guardandoEstado()"
             (click)="cambiarEstadoTema(tema.id, 'pendiente')"
           >
             Pendiente
@@ -324,6 +335,7 @@
             type="button"
             [class.tema-progreso__button--active]="tema.estado_estudio === 'en curso'"
             [attr.aria-pressed]="tema.estado_estudio === 'en curso'"
+            [disabled]="guardandoEstado()"
             (click)="cambiarEstadoTema(tema.id, 'en curso')"
           >
             En curso
@@ -333,11 +345,24 @@
             type="button"
             [class.tema-progreso__button--active]="tema.estado_estudio === 'completado'"
             [attr.aria-pressed]="tema.estado_estudio === 'completado'"
+            [disabled]="guardandoEstado()"
             (click)="cambiarEstadoTema(tema.id, 'completado')"
           >
             Completado
           </button>
         </div>
+
+        @if (guardandoEstado()) {
+          <p class="tema-progreso__estado-msg tema-progreso__estado-msg--cargando">
+            Guardando cambios...
+          </p>
+        }
+
+        @if (errorEstado(); as error) {
+          <p class="tema-progreso__estado-msg tema-progreso__estado-msg--error">
+            {{ error }}
+          </p>
+        }
       </div>
     </section>
   }
